@@ -67,8 +67,6 @@ RUN git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh &&\
 RUN echo ":set nu" >> ~/.vimrc
 RUN echo ":syntax on" >> ~/.vimrc
 
-# Directory for scripts
-RUN mkdir /scripts
 
 # For testing
 #ADD ./common/bro_profile.sh /etc/profile.d/zeek.sh
