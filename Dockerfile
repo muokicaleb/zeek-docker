@@ -52,9 +52,27 @@ RUN rm -f /usr/share/GeoIP/.notempty
 RUN ln -s /usr/local/zeek-${VER} /bro
 RUN ln -s /usr/local/zeek-${VER} /zeek
 
+# install zsh and net-tools vim
+RUN apt-get update \
+    && apt-get -y install zsh git net-tools vim neovim\
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh &&\
+    cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc &&\
+    chsh -s /bin/zsh && \
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$HOME/.zsh-syntax-highlighting" --depth 1 && \
+    echo "source $HOME/.zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> "$HOME/.zshrc"
+
+# install vim 
+RUN echo ":set nu" >> ~/.vimrc
+RUN echo ":syntax on" >> ~/.vimrc
+
+# Directory for scripts
+RUN mkdir /scripts
+
 # For testing
 #ADD ./common/bro_profile.sh /etc/profile.d/zeek.sh
 COPY --from=builder /usr/local/bro_profile.sh /etc/profile.d/zeek.sh
 
 env PATH /zeek/bin/:$PATH
-CMD /bin/bash -l
+CMD /bin/zsh -l
