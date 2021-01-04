@@ -54,7 +54,7 @@ RUN ln -s /usr/local/zeek-${VER} /zeek
 
 # install zsh and net-tools vim
 RUN apt-get update \
-    && apt-get -y install zsh git net-tools vim neovim\
+    && apt-get -y install zsh git net-tools vim neovim uml-utilities wget tcpreplay tcpdump whois\
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh &&\
